@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Varsha S | Cybersecurity Portfolio</title>
+    <style>
+        :root { 
+            --neon-cyan: #00f2ff;
+            --neon-purple: #bc13fe;
+            --dark-void: #030712;
+            --glass-bg: rgba(17, 24, 39, 0.85);
+            --border-glow: rgba(0, 242, 255, 0.3);
+            --text-bright: #f8fafc;
+            --text-dim: #94a3b8;
+            --standard-font-size: 1rem;
+        }
+
+        * { box-sizing: border-box; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: url('https://i.gifer.com/J4o.gif') no-repeat center/cover fixed;
+            margin: 0; 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            color: var(--text-bright);
+        }
+
+        .main-container {
+            width: 95%;
+            max-width: 1100px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 4px;
+            padding: 40px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), inset 0 0 20px var(--border-glow);
+            border: 1px solid var(--border-glow);
+            overflow-y: auto; 
+            max-height: 90vh;
+            position: relative;
+        }
+
+        header { 
+            display: grid; 
+            grid-template-columns: auto 1fr;
+            grid-template-areas: "pic txt" "nav nav";
+            align-items: center;
+            gap: 1.5rem; 
+            margin-bottom: 20px; 
+            border-bottom: 2px solid rgba(0, 242, 255, 0.1);
+            padding-bottom: 25px;
+        }
+
+        .profile-pic {
+    grid-area: pic;
+    width: 190px; 
+    height: 190px;
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+    object-fit: cover;
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.6);
+}
+
+        .header-text { grid-area: txt; }
+        .header-text h1 { 
+            margin: 0; 
+            font-size: 2.8rem; 
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(to right, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-text h3 {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        nav { 
+            grid-area: nav;
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 8px; 
+            margin-top: 10px;
+        }
+
+        .hover-btn {
+            background: rgba(0, 242, 255, 0.05);
+            color: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .hover-btn:hover { 
+            background: var(--neon-cyan);
+            color: var(--dark-void);
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        .section-box {
+            display: none; 
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-top: 25px;
+            border-radius: 2px;
+            animation: cyberDrop 0.4s ease-out;
+        }
+
+        .section-box p, .section-box ul, .section-box li, .section-box div, .cert-button {
+            font-size: var(--standard-font-size);
+            line-height: 1.6;
+            color: var(--text-bright);
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            border-left: 4px solid var(--neon-purple);
+            padding-left: 15px;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        .cert-button {
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 3px solid var(--neon-cyan);
+            margin: 15px 0;
+            padding: 25px;
+            border-radius: 0 4px 4px 0;
+            position: relative;
+        }
+
+        .cert-button strong {
+            display: block;
+            font-size: 1.15rem;
+            color: var(--neon-cyan);
+            margin-bottom: 8px;
+        }
+
+        .cert-button:hover {
+            background: rgba(0, 242, 255, 0.08);
+            border-left-color: var(--neon-purple);
+            transform: translateX(5px);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-pill {
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .cyber-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            padding: 12px;
+            color: var(--neon-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            outline: none;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .cyber-input:focus {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 242, 255, 0.05);
+        }
+
+        .cert-img {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto 0;
+            border: 1px solid var(--neon-cyan);
+        }
+
+        .cert-button:hover .cert-img { display: block; }
+
+        @keyframes cyberDrop {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            header { display: flex; flex-direction: column; text-align: center; }
+            .header-text h1 { font-size: 2.2rem; }
+            .main-container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+  <div class="main-container">
+
+    <header>
+      <img src="Professional_photo.jpg" class="profile-pic">
+      <div class="header-text">
+        <h1>VARSHA S</h1>
+        <h3>Cybersecurity Enthusiast&nbsp;|&nbsp;Developer&nbsp;|&nbsp;Problem Solver</h3>
+        <nav>
+          <a class="hover-btn" onclick="showSection('about')">About</a>
+          <a class="hover-btn" onclick="showSection('skills')">Skills</a>
+          <a class="hover-btn" onclick="showSection('projects')">Projects</a>
+          <a class="hover-btn" onclick="showSection('experience')">Experience</a>
+          <a class="hover-btn" onclick="showSection('contact')">Contact</a>
+          <a class="hover-btn" onclick="showSection('education')">Education</a>
+          <a class="hover-btn" onclick="showSection('certifications')">Certifications</a>
+          <a class="hover-btn" onclick="showSection('achievements')">Achievements</a>
+          <a class="hover-btn" onclick="showSection('roles')">Academic Responsibilities</a>
+        </nav>
+      </div>
+    </header>
+
+    <div id="about" class="section-box">
+      <h2>About Me</h2>
+      <p>Cybersecurity enthusiast with strong programming skills, foundational networking &amp;  and a passion for solving real‑world challenges. Seeking an opportunity to apply my technical expertise and gain hands‑on experience in software development and cybersecurity.</p>
+    </div>
+
+    <div id="skills" class="section-box">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+
+        <div class="skill-pill">
+          Programming&nbsp;Languages:
+          <br>Python, Java,</br>C/C++(Basic)
+          
+        </div>
+
+        <span class="skill-pill">Operating&nbsp;Systems (Windows, Linux)</span>
+    
+
+        <div class="skill-pill">
+          Database&nbsp;Management
+          (SQL)
+          
+        </div>
+
+        <span class="skill-pill">Networking (CCNA)</span>
+        <span class="skill-pill">Cybersecurity</span>
+        <span class="skill-pill">CTF&nbsp;Participant</span>
+        <span class="skill-pill">Public&nbsp;Speaking</span>
+        <span class="skill-pill">Full-Stack&nbsp;Development</span>
+
+      </div>
+    </div>
+
+<div id="projects" class="section-box">
+  <h2>Projects</h2>
+
+  <div class="cert-button">
+    <strong>Freelancer Hiring &amp; Management Platform</strong>
+    <ul>
+      <li>Built a secure web platform connecting freelancers and recruiters with JWT-based authentication and role-specific dashboards.</li>
+      <li>Recruiters can post jobs; freelancers can browse and apply using an “I’m Interested” feature.</li>
+      <li>Implemented job tracking system: pending, waitlisted, selected, rejected.</li>
+      <li>Optional email notifications for job status updates.</li>
+      <li><em>Tools/Technologies:</em> Django, Django REST Framework, HTML, CSS, JavaScript, JWT, SQLite3, SMTP.</li>
+    </ul>
+    <div style="margin-top: 15px; text-align: right;">
+        <a href="https://github.com/Varsha-S-745/Freelancer-Hiring-Platform" 
+           target="_blank" 
+           class="hover-btn" 
+           style="font-size: 0.85rem; padding: 6px 12px;">
+           View Code on GitHub ↗
+        </a>
+    </div>
+  </div>
+
+  <div class="cert-button">
+    <strong>Budget Tracker with AI Insights</strong>
+    <ul>
+      <li>Developed a full-stack finance tracker with real-time transaction logging.</li>
+      <li>Interactive visualizations using Chart.js.</li>
+      <li>AI-driven expense prediction, anomaly detection, and budgeting tips.</li>
+      <li>Mobile-friendly UI with extensible architecture.</li>
+      <li><em>Tools/Technologies:</em> Python (Flask), SQLite, HTML, CSS, JavaScript, Chart.js, Pandas, NumPy.</li>
+    </ul>
+    <div style="margin-top: 15px; text-align: right;">
+        <a href="https://github.com/Varsha-S-745/Personal-Budget-And-Expense-Tracker-with-AI-Insights" 
+           target="_blank" 
+           class="hover-btn" 
+           style="font-size: 0.85rem; padding: 6px 12px;">
+           View Code on GitHub ↗
+        </a>
+    </div>
+  </div>
+
+  <div class="cert-button">
+    <strong>PrivAware Lite</strong>
+    <ul>
+      <li>Chrome browser extension for real-time privacy risk detection.</li>
+      <li>Monitors web requests, identifies PII exposure, and analyzes tracking activities.</li>
+      <li>ML-based classification to score websites as Safe, Moderate, or Risky.</li>
+      <li>Instant alerts to support informed privacy decisions.</li>
+      <li><em>Tools/Technologies:</em> JavaScript (Chrome Extension APIs), Python (Flask, Scikit-learn), HTML, CSS, Chart.js.</li>
+    </ul>
+    <div style="margin-top: 15px; text-align: right;">
+        <a href="https://github.com/Varsha-S-745/PrivAware" 
+           target="_blank" 
+           class="hover-btn" 
+           style="font-size: 0.85rem; padding: 6px 12px;">
+           View Code on GitHub ↗
+        </a>
+    </div>
+  </div>
+
+  <div class="cert-button">
+    <strong>IoT Device Security Manager</strong>
+    <ul>
+      <li>Built a security dashboard to scan IoT devices using Nmap.</li>
+      <li>Detects insecure services and vulnerabilities.</li>
+      <li>Provides actionable risk insights with a dark-themed UI.</li>
+      <li>Supports JSON export for integration with tools like Shodan.</li>
+      <li><em>Tools/Technologies:</em> Python (Flask), Nmap, XML Parsing, HTML, CSS, JSON.</li>
+    </ul>
+    <div style="margin-top: 15px; text-align: right;">
+        <a href="https://github.com/Varsha-S-745/IoT-Device-Security-Manager" 
+           target="_blank" 
+           class="hover-btn" 
+           style="font-size: 0.85rem; padding: 6px 12px;">
+           View Code on GitHub ↗
+        </a>
+    </div>
+  </div>
+</div>
+
+<div id="experience" class="section-box">
+  <h2>Internship Experience</h2>
+
+  <div class="cert-button">
+    <strong>Cybersecurity Internship – Cyber Crime Department, Central Crime Branch</strong><br>
+    <em>Greater Chennai Police Commissionerate, Vepery, Chennai</em><br>
+    <em>14th July 2025 – 14th August 2025 (1 Month)</em>
+    <ul>
+      <li>Examined real cybercrime cases including Korean Visa Scam, Cryptocurrency Scam, Online Trading Scam, and Fake Twitter Account Scam.</li>
+      <li>Worked with advanced digital forensic tools to support real-world cybercrime investigations.</li>
+      <li>Collaborated with officers and technical teams to understand investigation workflows and chain-of-custody procedures.</li>
+    </ul>
+    <img src="Cyber security internship.jpg" class="cert-img">
+    <img src="Internship.jpeg" class="cert-img">
+  </div>
+
+  <div class="cert-button">
+    <strong>Python Developer Intern – Infosys Springboard (Remote)</strong><br>
+    <em>6th Oct 2025 – 6th Dec 2025 (2 Months)</em>
+    <ul>
+      <li>Built a full-stack web application titled <strong>“SkillConnect”</strong>, a freelance marketplace platform connecting employers with independent professionals.</li>
+      <li>Implemented role-based authentication (Recruiter/Freelancer), project posting, bidding workflows, and email-based communication.</li>
+      <li>Focused on scalable backend development, modular architecture, and industry-grade Python practices.</li>
+    </ul>
+    <img src="Infosys Internship.jpg" class="cert-img">
+    
+  </div>
+
+  <div class="cert-button">
+    <strong>Python Programming Internship – YBI Foundations (AICTE Approved, Remote)</strong><br>
+    <em>18th May 2024 – 18th July 2024 (2 Months)</em>
+    <ul>
+      <li>Designed and developed scalable web applications using Python and modern web technologies.</li>
+      <li>Collaborated with a team to deliver a functional and robust Python-based web application.</li>
+      <li>Improved backend performance, streamlined code structure, and enhanced application functionality.</li>
+    </ul>
+    <img src="Python Programming Internship.jpg" class="cert-img">
+  </div>
+
+</div>
+
+    <div id="contact" class="section-box">
+      <h2>Contact&nbsp;&amp;&nbsp;Links</h2>
+      <div class="contact-links">
+        <a href="tel:+919025810597" class="hover-btn">📞 +91 90258 10597</a>
+        <a class="hover-btn">📧 Email: varsha.s7405@gmail.com</a>
+        <a href="https://github.com/Varsha-S-745" target="_blank" class="hover-btn">GitHub</a>
+        <a href="https://linkedin.com/in/varsha-s-802705320" target="_blank" class="hover-btn">LinkedIn</a>
+        <a href="https://leetcode.com/u/VARSHA_S_07045/" target="_blank" class="hover-btn">LeetCode</a>
+      </div>
+      <div class="cert-button" style="border-left-color: var(--neon-purple);">
+        <strong style="color: var(--neon-purple);">CONTACT ME THROUGH MAIL</strong>
+        <form action="https://formspree.io/f/mykngpjb" method="POST">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <input type="text" name="name" placeholder="NAME" required class="cyber-input">
+                <input type="email" name="email" placeholder="EMAIL ID" required class="cyber-input">
+            </div>
+            <textarea name="message" rows="4" placeholder="YOUR FEEDBACK" required class="cyber-input" style="resize:none;"></textarea>
+            <button type="submit" class="hover-btn" style="width:100%; border-color: var(--neon-purple); color: var(--neon-purple);">SEND FEEDBACK</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="education" class="section-box">
+      <h2>Education</h2>
+      <div class="cert-button"><strong>B.E. Computer Science (Cybersecurity)</strong><br>SRM Easwari Engineering College (2023 – 2027)<br><em>CGPA: 9.58</em></div>
+      <div class="cert-button"><strong>Senior Secondary – CS &amp; Maths</strong><br>Devi Academy Senior Secondary School (2022 – 2023)<br><em>Grade: 94.2 %</em></div>
+      <div class="cert-button"><strong>Higher Secondary – SSLC</strong><br>Devi Academy Senior Secondary School (2022 – 2023)<br><em>Grade: 97.4 %</em></div>
+    </div>
+
+<div id="certifications" class="section-box">
+  <h2>Certifications</h2>
+
+  <div class="cert-button">
+    Google Cybersecurity Professional Certificate
+    <img src="GOOGLE CYBERSECURITY PROFESSIONAL CERTIFICATE.jpg" class="cert-img">
+  </div>
+
+  <div class="cert-button">
+    Cisco CCNA Level 1, Level 2 &amp; Level 3
+    <img src="CCNA L1.jpg" class="cert-img">
+    <img src="CCNA L2.jpg" class="cert-img">
+    <img src="CCNA L3.jpg" class="cert-img">
+  </div>
+
+  <div class="cert-button">
+    Junior Cybersecurity Analyst Career Path – Cisco Networking Academy
+    <img src="Junior_Cybersecurity_Analyst_Career_Path_Badge.jpg" class="cert-img">
+  </div>
+
+  <div class="cert-button">
+    Python Essentials 1 & 2
+    <img src="Python Essentials 1.jpg" class="cert-img">
+    <img src="Python Essentials 2.jpg" class="cert-img">
+  </div>
+
+  <div class="cert-button">
+    Ethical Hacking Masterclass – Infosys Springboard
+    <img src="ETHICAL HACKING MASTERCLASS.jpg" class="cert-img">
+  </div>
+
+  <div class="cert-button">
+    Industry 4.0, IoT and Human Computer Interaction – NPTEL
+    <img src="Human Computer Interaction_page-0001.jpg" class="cert-img">
+    <img src="nptel result_page-0001.jpg" class="cert-img">
+  </div>
+
+  <div class="cert-button">
+    AI Fundamentals – IBM SkillsBuild
+    <img src="AI Fundamentals.jpg" class="cert-img">
+  </div>
+
+</div>
+
+    <div id="achievements" class="section-box">
+      <h2>Achievements &amp; Activities</h2><strong>
+      <div class="cert-button">Runner‑up in CTF (CRAC Learning) <img src="WORKSHOP CERTIFICATE 2.png"class="cert-img"><img src="WORSHOP CERTIFICATE 3.jpg" class="cert-img"></div>
+      <div class="cert-button">Selected for State‑level Bootcamp: “Cyber Security in the AI Era”<img src="Anna Univrsity Bootcamp.jpg" class="cert-img"><img src="Bootcamp.jpg" class="cert-img"></div>
+      <div class="cert-button">Software Job Simulation By Accenture<img src="Accenture job simulation_page-0001.jpg" class="cert-img"></div>
+      <div class="cert-button">Cybersecurity simulations – Deloitte, Mastercard, JP Morgan<img src="Cyber security job simulation 6_page-0001.jpg" class="cert-img"><img src="Job simulation 6_page-0001.jpg" class="cert-img"><img src="Deloitte cyber job simulation_page-0001.jpg" class="cert-img"></div>
+      <div class="cert-button">National Project Display – SRM Easwari Engineering College<img src="Project display.jpg" class="cert-img"></div>
+      <div class="cert-button">Gold &amp; Silver Elite badges – NPTEL <img src="Human Computer Interaction_page-0001.jpg" class="cert-img"><img src= "nptel result_page-0001.jpg" class="cert-img"></div>
+    </strong><div class="cert-button">
+        <strong>Technical Content Writer – WeDidIt (Social Awareness & Wellness Association)</strong><br>
+        Contributed for 1 month creating impactful blog & promotional content for a socially driven book, enhancing online visibility and supporting education funding for underprivileged children.
+        <img src="WeDidIt Internship.jpg" class="cert-img">
+        <img src="Middlemen Internship.jpg" class="cert-img">
+      </div>
+    </div>
+
+    <div id="roles" class="section-box">
+      <h2>Extracurricular &amp; Academic Responsibilities</h2>
+      <div class="cert-button"><strong>Content Creator – NULLEEC Club</strong><br>Created and managed content for the club's social media platforms, organised coding workshops &amp; hackathons, produced event content.<img src="null eec batch.jpg" class ="cert-img"></div>
+      <div class="cert-button"><strong>PRIDE Director – Association of Cybersecurity</strong><br>Led workshops, guest lectures, ted talks, alumni meetup and interactions &amp; symposiums, fostering collaboration.<img src="Cyber club batch.jpg" class="cert-img"></div>
+      <div class="cert-button"><strong>Member – Youth Red Cross Club</strong><br>Contributed to social initiatives and improved technical skills via participating in competitions.<img src="yrc proof.jpg" class="cert-img"><img src="Walkhathon.jpg" class="cert-img"><img src="Mission Crusader Certificate.jpg" class="cert-img"></div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id){
+      document.querySelectorAll('.section-box').forEach(b=>b.style.display='none');
+      document.getElementById(id).style.display='block';
+    }
+  </script>
+</body>
+</html>
